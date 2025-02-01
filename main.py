@@ -17,7 +17,7 @@ def countdown():
         time.sleep(1)
         timeout_duration -= 1
     print("Timeout reached!")
-    sys.exit
+    exit()
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
