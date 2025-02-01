@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from datetime import timedelta 
+import time
 import user_management as dbHandler
 
 # Code snippet for logging a message
@@ -8,7 +9,19 @@ import user_management as dbHandler
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
 app.permanent_session_lifetime = timedelta(minutes=1)
-print("Value", app.permanent_session_lifetime)
+print("TIMEOUT VAL", app.permanent_session_lifetime)
+
+def check_session_timeout():
+    while True:
+        time.sleep(1)  # Check every second
+        if 'last_activity' in session:
+            session_age = datetime.now() - session['last_activity']
+            if session_age > app.permanent_session_lifetime:
+                session.clear()
+                print("SESSION TIMEOUT!!")
+            else:
+                print(f"SESSION: {session_age}")
+
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
     session.permanent = True
