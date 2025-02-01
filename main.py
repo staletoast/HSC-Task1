@@ -1,17 +1,17 @@
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import redirect
+from flask import Flask, render_template, request, redirect, session
+from datetime import timedelta 
 import user_management as dbHandler
 
 # Code snippet for logging a message
 # app.logger.critical("message")
 
 app = Flask(__name__)
-
+app.secret_key = 'secretkeyhere' #do this later
+app.permanent_session_lifetime = timedelta(minutes=10)
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
+    session.permanent = True
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
