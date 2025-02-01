@@ -10,14 +10,16 @@ import threading
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
 
+timeout_duration = 10 * 60  # 10 minutes in seconds
+
 def countdown():
-    timeout_duration = 1 * 60
     while timeout_duration > 0:
         print(f"Time remaining: {timeout_duration} seconds")
         time.sleep(1)
         timeout_duration -= 1
-    print("Timeout!!!")
-    session.clear()
+    print("Timeout reached!")
+    with app.app_context():
+        session.clear()
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
