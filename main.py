@@ -9,7 +9,7 @@ import threading
 
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = 10 * 60
 print("TIMEOUT VAL", app.permanent_session_lifetime)
 
 def countdown():
@@ -18,7 +18,7 @@ def countdown():
         print(f"Time remaining: {timeout_duration} seconds")
         time.sleep(1)
         timeout_duration -= 1
-    print("Timeout!!!!!!")
+    print("Timeout!!!")
     session.clear()
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
