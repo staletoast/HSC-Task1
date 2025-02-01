@@ -7,7 +7,7 @@ import user_management as dbHandler
 
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
-app.permanent_session_lifetime = timedelta(minutes=3)
+app.permanent_session_lifetime = timedelta(minutes=1)
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
