@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
 
 def countdown():   
-    timeout_duration = 0.1 * 60 
+    timeout_duration = 2 * 60 
     while timeout_duration > 0:
         print(f"Time remaining: {timeout_duration} seconds")
         time.sleep(1)
