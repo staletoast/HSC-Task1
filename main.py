@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, redirect, session
-from datetime import timedelta, datetime
+from datetime import datetime
 import time
+from flask import Flask, render_template, request, redirect, session
 import user_management as dbHandler
-import threading
 
 # Code snippet for logging a message
 # app.logger.critical("message")
@@ -10,8 +9,8 @@ import threading
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
 
-def countdown():   
-    timeout_duration = 2 * 60 
+def countdown(): #countdown for session timeout
+    timeout_duration = 2 * 60
     while timeout_duration > 0:
         print(f"Time remaining: {timeout_duration} seconds")
         time.sleep(1)
@@ -20,7 +19,7 @@ def countdown():
     exit()
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
-def addFeedback():
+def addFeedback(): #feedback module
     session.permanent = True
     session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
@@ -37,7 +36,7 @@ def addFeedback():
 
 
 @app.route("/signup.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
-def signup():
+def signup(): #signup
     session.permanent = True
     session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
@@ -55,7 +54,7 @@ def signup():
 
 @app.route("/index.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 @app.route("/", methods=["POST", "GET"])
-def home():
+def home(): #homepage
     session.permanent = True
     session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
