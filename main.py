@@ -10,9 +10,8 @@ import threading
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
 
-timeout_duration = 10 * 60  # 10 minutes in seconds
-
-def countdown():
+def countdown():   
+    timeout_duration = 10 * 60  # 10 minutes in seconds
     while timeout_duration > 0:
         print(f"Time remaining: {timeout_duration} seconds")
         time.sleep(1)
