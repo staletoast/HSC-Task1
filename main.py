@@ -25,6 +25,7 @@ def check_session_timeout():
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
     session.permanent = True
+    session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -41,6 +42,7 @@ def addFeedback():
 @app.route("/signup.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def signup():
     session.permanent = True
+    session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -58,6 +60,7 @@ def signup():
 @app.route("/", methods=["POST", "GET"])
 def home():
     session.permanent = True
+    session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
