@@ -12,17 +12,14 @@ app.secret_key = 'secretkeyhere' #do this later
 app.permanent_session_lifetime = timedelta(minutes=1)
 print("TIMEOUT VAL", app.permanent_session_lifetime)
 
-def check_session_timeout():
-    while True:
-        time.sleep(1)  # Check every second
-        if 'last_activity' in session:
-            session_age = datetime.now() - session['last_activity']
-            if session_age > app.permanent_session_lifetime:
-                session.clear()
-                print("SESSION TIMEOUT!!")
-            else:
-                print(f"SESSION: {session_age}")
-
+def countdown():
+    timeout_duration = app.permanent_session_lifetime
+    while timeout_duration > 0:
+        print(f"Time remaining: {timeout_duration} seconds")
+        time.sleep(1)
+        timeout_duration -= 1
+    print("Timeout!!!!!!")
+    session.clear()
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
     session.permanent = True
@@ -81,5 +78,5 @@ def home():
 if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
-    threading.Thread(target=check_session_timeout, daemon=True).start()
+    countdown()
     app.run(debug=True, host="0.0.0.0", port=5000)
