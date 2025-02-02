@@ -8,7 +8,7 @@ import user_management as dbHandler
 
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = timedelta(days=1)
 
 '''
 def countdown(): #countdown for session timeout
