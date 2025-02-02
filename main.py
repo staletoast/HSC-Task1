@@ -29,7 +29,8 @@ def addEntry():
         return redirect(url, code=302)
     if request.method == "POST":
         entry = request.form["entry"]
-        dbHandler.insertEntry(entry)
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # timestamp
+        dbHandler.insertEntry(f"{entry}: created {timestamp}")  #incl timestamp to entry
         dbHandler.listEntry()
         return render_template("/success.html", state=True, value="Back")
     else:
