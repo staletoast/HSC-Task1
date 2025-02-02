@@ -58,3 +58,28 @@ def listEntry():
         f.write(f"{row[1]}\n")
         f.write("</p>\n")
     f.close()
+
+def searchEntries(developer, project, date, log_contents):
+    con = sql.connect("database_files/database.db")
+    cur = con.cursor()
+    
+    query = "SELECT * FROM entry WHERE 1=1"
+    params = []
+    
+    if developer:
+        query += " AND entry LIKE ?"
+        params.append(f"%Developer: {developer}%")
+    if project:
+        query += " AND entry LIKE ?"
+        params.append(f"%Project: {project}%")
+    if date:
+        query += " AND entry LIKE ?"
+        params.append(f"%Date/Time: {date}%")
+    if log_contents:
+        query += " AND entry LIKE ?"
+        params.append(f"%Log: {log_contents}%")
+    
+    cur.execute(query, params)
+    results = cur.fetchall()
+    con.close()
+    return results

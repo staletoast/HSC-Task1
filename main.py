@@ -74,6 +74,19 @@ def home(): #homepage
     else:
         return render_template("/index.html")
 
+@app.route("/search.html", methods=["GET", "POST"])
+def searchEntries():
+    session.permanent = True
+    if request.method == "POST":
+        developer = request.form.get("developer")
+        project = request.form.get("project")
+        date = request.form.get("date")
+        log_contents = request.form.get("log_contents")
+        
+        results = dbHandler.searchEntries(developer, project, date, log_contents)
+        return render_template("/search.html", results=results)
+    else:
+        return render_template("/search.html", results=[])
 
 if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
