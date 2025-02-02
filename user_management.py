@@ -39,20 +39,20 @@ def retrieveUsers(username, password):
             return True
 
 
-def insertFeedback(feedback):
+def insertEntry(entry):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
-    cur.execute(f"INSERT INTO feedback (feedback) VALUES ('{feedback}')")
+    cur.execute(f"INSERT INTO entry (entry) VALUES ('{entry}')")
     con.commit()
     con.close()
 
 
-def listFeedback():
+def listEntry():
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
-    data = cur.execute("SELECT * FROM feedback").fetchall()
+    data = cur.execute("SELECT * FROM entry").fetchall()
     con.close()
-    f = open("templates/partials/success_feedback.html", "w")
+    f = open("templates/partials/success_entries.html", "w")
     for row in data:
         f.write("<p>\n")
         f.write(f"{row[1]}\n")

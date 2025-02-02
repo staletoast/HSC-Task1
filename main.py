@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 from flask import Flask, render_template, request, redirect, session
 import user_management as dbHandler
@@ -8,7 +8,9 @@ import user_management as dbHandler
 
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
+app.permanent_session_lifetime = timedelta(minutes=1)
 
+'''
 def countdown(): #countdown for session timeout
     timeout_duration = 2 * 60
     while timeout_duration > 0:
@@ -17,28 +19,27 @@ def countdown(): #countdown for session timeout
         timeout_duration -= 1
     print("Timeout reached!")
     exit()
+'''
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
-def addFeedback(): #feedback module
+def addEntry(): 
     session.permanent = True
-    session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
     if request.method == "POST":
-        feedback = request.form["feedback"]
-        dbHandler.insertFeedback(feedback)
-        dbHandler.listFeedback()
+        entry = request.form["entry"]
+        dbHandler.insertEntry(entry)
+        dbHandler.listEntry()
         return render_template("/success.html", state=True, value="Back")
     else:
-        dbHandler.listFeedback()
+        dbHandler.listEntry()
         return render_template("/success.html", state=True, value="Back")
 
 
 @app.route("/signup.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def signup(): #signup
     session.permanent = True
-    session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -56,7 +57,6 @@ def signup(): #signup
 @app.route("/", methods=["POST", "GET"])
 def home(): #homepage
     session.permanent = True
-    session['last_activity'] = datetime.now()
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -65,7 +65,7 @@ def home(): #homepage
         password = request.form["password"]
         isLoggedIn = dbHandler.retrieveUsers(username, password)
         if isLoggedIn:
-            dbHandler.listFeedback()
+            dbHandler.listEntry()
             return render_template("/success.html", value=username, state=isLoggedIn)
         else:
             return render_template("/index.html")
@@ -76,5 +76,5 @@ def home(): #homepage
 if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
-    countdown()
+    #countdown()
     app.run(debug=True, host="0.0.0.0", port=5000)
