@@ -1,23 +1,36 @@
 {% extends 'layout.html' %} {% block content %}
-<h1>Welcome {{ value }}!</h1>
-<form action="/success.html" method="post" class="box">
-  <div class="input__wrapper">
-    <input
-      style="height: 100px; vertical-align: top"
-      type="text"
-      name="entry"
-      id="entry"
-      placeholder="Create your log entry:"
-      class="input__field"
-      required
-    />
-  </div>
-  <div class="input__wrapper">
-    <input type="submit" class="btn" value="Post" />
-  </div>
-</form>
-<hr />
-<br />
-<h1>All Entries</h1>
-<div>{% include "partials/success_entries.html" %}</div>
-{% endblock %}
+<h3>Welcome {{ value }}!</h3>
+    <h1>New Entry</h1>
+    <form action="/success.html" method="post" class="box">
+      <div class="input__wrapper">
+        <input
+          type="text"
+          name="project"
+          id="project"
+          placeholder="Project:"
+          class="input__field"
+          required
+        />
+      </div>
+      <div class="input__wrapper">
+        <input
+          style="height: 100px; vertical-align: top"
+          type="text"
+          name="entry"
+          id="entry"
+          placeholder="Create your log entry:"
+          class="input__field"
+          required
+        />
+      </div>
+      <div class="input__wrapper">
+        <input type="submit" class="btn" value="Post" />
+      </div>
+    </form>
+    <hr />
+    <br />
+    <h1>All Entries</h1>
+    <div>{% include "partials/success_entries.html" %}</div>
+    {% endblock %}
+  </h1>
+</h1>

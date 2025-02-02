@@ -9,6 +9,7 @@ import user_management as dbHandler
 app = Flask(__name__)
 app.secret_key = 'secretkeyhere' #do this later
 app.permanent_session_lifetime = timedelta(days=1)
+app.currentUser = " "
 
 '''
 def countdown(): #countdown for session timeout
@@ -20,23 +21,6 @@ def countdown(): #countdown for session timeout
     print("Timeout reached!")
     exit()
 '''
-
-@app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
-def addEntry(): 
-    session.permanent = True
-    if request.method == "GET" and request.args.get("url"):
-        url = request.args.get("url", "")
-        return redirect(url, code=302)
-    if request.method == "POST":
-        entry = request.form["entry"]
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # timestamp
-        dbHandler.insertEntry(f"{entry}: created {timestamp}")  #incl timestamp to entry
-        dbHandler.listEntry()
-        return render_template("/success.html", state=True, value="Back")
-    else:
-        dbHandler.listEntry()
-        return render_template("/success.html", state=True, value="Back")
-
 
 @app.route("/signup.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def signup(): #signup
@@ -53,6 +37,22 @@ def signup(): #signup
     else:
         return render_template("/signup.html")
 
+@app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
+def addEntry(): 
+    session.permanent = True
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        return redirect(url, code=302)
+    if request.method == "POST":
+        entry = request.form["entry"]
+        project = request.form["project"]
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # timestamp
+        dbHandler.insertEntry(f"<br>Developer: {app.currentUser} <br>Project: {project} <br>Date/Time: {timestamp} <br>Log: {entry}")  #incl timestamp to entry
+        dbHandler.listEntry()
+        return render_template("/success.html", state=True, value="Back")
+    else:
+        dbHandler.listEntry()
+        return render_template("/success.html", state=True, value="Back")
 
 @app.route("/index.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 @app.route("/", methods=["POST", "GET"])
@@ -67,6 +67,7 @@ def home(): #homepage
         isLoggedIn = dbHandler.retrieveUsers(username, password)
         if isLoggedIn:
             dbHandler.listEntry()
+            app.currentUser = username
             return render_template("/success.html", value=username, state=isLoggedIn)
         else:
             return render_template("/index.html")
