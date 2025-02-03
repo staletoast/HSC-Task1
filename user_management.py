@@ -55,8 +55,18 @@ def listEntry():
     f = open("templates/partials/success_entries.html", "w")
     for row in data:
         f.write("<p>\n")
-        f.write(f"{row[1]}\n")
+        f.write(f"Developer: {row[2]}\n")
         f.write("</p>\n")
+        f.write("<p>\n")
+        f.write(f"Project: {row[3]}\n")
+        f.write("</p>\n")
+        f.write("<p>\n") 
+        f.write(f"Date/Time: {row[4]}\n")
+        f.write("</p>\n")
+        f.write("<p>\n") 
+        f.write(f"Log Entry: {row[1]}\n") 
+        f.write("</p>\n")
+        f.write("<p>\n ________________</p>")
     f.close()
 
 def searchEntries(developer, project, date, log_contents):

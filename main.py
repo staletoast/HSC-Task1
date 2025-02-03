@@ -40,6 +40,9 @@ def signup(): #signup
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addEntry(): 
     session.permanent = True
+    developer = app.currentUser
+    if developer == " ":
+        return render_template("/index.html")
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -47,7 +50,6 @@ def addEntry():
         entry = request.form["entry"]
         project = request.form["project"]
         timecreated = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # timestamp
-        developer = app.currentUser
         dbHandler.insertEntry(entry, developer, project, timecreated)
         dbHandler.listEntry()
         return render_template("/success.html", state=True, value="Back")
@@ -93,4 +95,4 @@ if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
     #countdown()
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5001)
