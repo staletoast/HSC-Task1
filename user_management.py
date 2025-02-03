@@ -39,10 +39,10 @@ def retrieveUsers(username, password):
             return True
 
 
-def insertEntry(entry):
+def insertEntry(entry,developer,project,timecreated):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
-    cur.execute(f"INSERT INTO entry (entry) VALUES ('{entry}')")
+    cur.execute(f"INSERT INTO entry (entry,developer,project,timecreated) VALUES ('{entry}','{developer}','{project}','{timecreated}')")
     con.commit()
     con.close()
 

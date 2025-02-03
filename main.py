@@ -46,8 +46,9 @@ def addEntry():
     if request.method == "POST":
         entry = request.form["entry"]
         project = request.form["project"]
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # timestamp
-        dbHandler.insertEntry(f"<br>Developer: {app.currentUser} <br>Project: {project} <br>Date/Time: {timestamp} <br>Log: {entry}")  #incl timestamp to entry
+        timecreated = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # timestamp
+        developer = app.currentUser
+        dbHandler.insertEntry(entry, developer, project, timecreated)
         dbHandler.listEntry()
         return render_template("/success.html", state=True, value="Back")
     else:

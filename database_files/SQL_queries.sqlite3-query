@@ -8,8 +8,10 @@
 
 --SELECT * FROM extension;
 
--- CREATE TABLE feedback(id INTEGER PRIMARY KEY autoincrement,feedback TEXT NOT NULL);
+--CREATE TABLE "entry"(id INTEGER PRIMARY KEY autoincrement,"entry" TEXT NOT NULL,"developer" TEXT NOT NULL,"project" TEXT NOT NULL,"timecreated" TEXT NOT NULL)
 
 -- INSERT INTO feedback(feedback) VALUES ("Tempe High School Students WERE HERE!");
+
+INSERT INTO entry(entry,developer,project,timecreated) VALUES ("goober","m","projecty","2025-02-02 01:52:52")
 
 -- DELETE FROM feedback WHERE id > 12;
