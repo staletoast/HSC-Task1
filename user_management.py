@@ -76,46 +76,31 @@ def searchEntries(entry, developer, project, timecreated):
     query = "SELECT * FROM entry WHERE 1=1"
     params = []
     
+    checkval = int
+    checkval = 0
     if developer:
-        query += " AND entry LIKE ?"
-        params.append(f"%Developer: {developer}%")
+        query += " AND developer LIKE ?"
+        params.append(f"%{developer}%")
+        checkval = 1
     if project:
-        query += " AND entry LIKE ?"
-        params.append(f"%Project: {project}%")
+        query += " AND project LIKE ?"
+        params.append(f"%{project}%")
+        checkval = 1
     if timecreated:
-        query += " AND entry LIKE ?"
-        params.append(f"%Date/Time: {timecreated}%")
+        query += " AND timecreated LIKE ?"
+        params.append(f"%{timecreated}%")
+        checkval = 1
     if entry:
         query += " AND entry LIKE ?"
-        params.append(f"%Log: {entry}%")
-    
-    cur.execute(query, params)
-    results = cur.fetchall()
-    con.close()
-    return results
+        params.append(f"%{entry}%")
+        checkval = 1
 
-
-    data = cur.execute("SELECT * FROM entry").fetchall()
-
-
-    con.close()
-    for row in data:
-        f.write("<p>\n")
-        f.write(f"Developer: {row[2]}\n")
-        f.write("</p>\n")
-        f.write("<p>\n")
-        f.write(f"Project: {row[3]}\n")
-        f.write("</p>\n")
-        f.write("<p>\n") 
-        f.write(f"Date/Time: {row[4]}\n")
-        f.write("</p>\n")
-        f.write("<p>\n") 
-        f.write(f"Log Entry: {row[1]}\n") 
-        f.write("</p>\n")
-        f.write("<p>\n ________________</p>")
-    f.close()
-
-    con = sql.connect("database_files/database.db")
-    cur = con.cursor()
-    
-    
+    if checkval > 0:
+        cur.execute(query, params)
+        results = cur.fetchall()
+        con.close()
+        return results
+    else: 
+        con.close()
+        results=[]
+        return results

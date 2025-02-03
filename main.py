@@ -83,8 +83,8 @@ def searchEntries():
     if request.method == "POST":
         developer = request.form.get("developer")
         project = request.form.get("project")
-        date = request.form.get("date")
-        log_contents = request.form.get("log_contents")
+        timecreated = request.form.get("timecreated")
+        entry = request.form.get("entry")
         
         results = dbHandler.searchEntries(entry, developer, project, timecreated)
         return render_template("/search.html", results=results)
