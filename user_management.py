@@ -69,10 +69,10 @@ def listEntry():
         f.write("<p>\n ________________</p>")
     f.close()
 
-def searchEntries(developer, project, date, log_contents):
+def searchEntries(entry, developer, project, timecreated):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
-    
+
     query = "SELECT * FROM entry WHERE 1=1"
     params = []
     
@@ -82,14 +82,40 @@ def searchEntries(developer, project, date, log_contents):
     if project:
         query += " AND entry LIKE ?"
         params.append(f"%Project: {project}%")
-    if date:
+    if timecreated:
         query += " AND entry LIKE ?"
-        params.append(f"%Date/Time: {date}%")
-    if log_contents:
+        params.append(f"%Date/Time: {timecreated}%")
+    if entry:
         query += " AND entry LIKE ?"
-        params.append(f"%Log: {log_contents}%")
+        params.append(f"%Log: {entry}%")
     
     cur.execute(query, params)
     results = cur.fetchall()
     con.close()
     return results
+
+
+    data = cur.execute("SELECT * FROM entry").fetchall()
+
+
+    con.close()
+    for row in data:
+        f.write("<p>\n")
+        f.write(f"Developer: {row[2]}\n")
+        f.write("</p>\n")
+        f.write("<p>\n")
+        f.write(f"Project: {row[3]}\n")
+        f.write("</p>\n")
+        f.write("<p>\n") 
+        f.write(f"Date/Time: {row[4]}\n")
+        f.write("</p>\n")
+        f.write("<p>\n") 
+        f.write(f"Log Entry: {row[1]}\n") 
+        f.write("</p>\n")
+        f.write("<p>\n ________________</p>")
+    f.close()
+
+    con = sql.connect("database_files/database.db")
+    cur = con.cursor()
+    
+    

@@ -86,7 +86,7 @@ def searchEntries():
         date = request.form.get("date")
         log_contents = request.form.get("log_contents")
         
-        results = dbHandler.searchEntries(developer, project, date, log_contents)
+        results = dbHandler.searchEntries(entry, developer, project, timecreated)
         return render_template("/search.html", results=results)
     else:
         return render_template("/search.html", results=[])
@@ -95,4 +95,4 @@ if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
     #countdown()
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(debug=True, host="0.0.0.0", port=5000)
