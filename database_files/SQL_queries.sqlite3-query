@@ -12,6 +12,8 @@
 
 -- INSERT INTO feedback(feedback) VALUES ("Tempe High School Students WERE HERE!");
 
-INSERT INTO entry(entry,developer,project,timecreated) VALUES ("goober","m","projecty","2025-02-02 01:52:52")
+INSERT INTO entry(entry,developer,project,timecreated) VALUES ("jkk","m","jkjk","2025-02-02 01:52:52")
+
+--DELETE FROM entry WHERE developer = " "
 
 -- DELETE FROM feedback WHERE id > 12;
