@@ -16,10 +16,12 @@
             <h1>The Unsecure PWA</h1>
             <ul class="topnav">
                 <li><a href="?url=/">Home</a></li>
-                <li><a href="?url=/signup.html">SIGN UP</a></li>
+                {% if not state %}
+                    <li><a href="?url=/signup.html">SIGN UP</a></li>
+                {% endif %}
                 {% if state %}
                     <li><a href="?url=/search.html">Search</a></li>
-                    <li><a href="?url=/success.html">Create/View</a></li>
+                    <li><a href="?url=/success.html">Create</a></li>
                     <li><a href="?url=/">Logout</a></li>
                 {% endif %}
             </ul>
