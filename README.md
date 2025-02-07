@@ -60,5 +60,5 @@ Once deployed, the app can be accessed on either:
 ---
 
 ## Working Log-In
-Username : Developer
-Password : Password
+- Username: Developer
+- Password: Password
